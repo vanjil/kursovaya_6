@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Mailings{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Mailings</h1>
+    <a href="{% url 'mailing_add' %}" class="btn btn-primary mb-3">Add New Mailing</a>
+    <ul class="list-group">
+        {% for mailing in mailings %}
+            <li class="list-group-item">
+                <strong>Date:</strong> {{ mailing.date }}<br>
+                <strong>Status:</strong> {{ mailing.status }}<br>
+                <strong>Subject:</strong> {{ mailing.message.subject }}
+            </li>
+        {% empty %}
+            <li class="list-group-item">No mailings available.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Log Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Log Details</h1>
+    <div class="card">
+        <div class="card-header">
+            Log ID: {{ log.id }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Created At: {{ log.created_at }}</h5>
+            <p class="card-text">{{ log.message }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'logs' %}" class="btn btn-secondary">Back to Logs</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

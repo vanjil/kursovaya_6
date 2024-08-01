@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Client List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Список клиентов</h1>
+    <a href="{% url 'client_add' %}" class="btn btn-success mb-3">Добавить клиента</a>
+    <ul class="list-group">
+        {% for client in clients %}
+            <li class="list-group-item">
+                {{ client.name }} ({{ client.email }})
+                <a href="{% url 'client_edit' client.pk %}" class="btn btn-primary btn-sm float-right ml-2">Редактировать</a>
+                <a href="{% url 'client_delete' client.pk %}" class="btn btn-danger btn-sm float-right">Удалить</a>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No clients available.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

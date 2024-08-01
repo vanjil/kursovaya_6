@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Mailing Report{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Отчет проведенных рассылок</h1>
+    <ul class="list-group">
+        {% for mailing in mailings %}
+            <li class="list-group-item">
+                <strong>Date:</strong> {{ mailing.date }}<br>
+                <strong>Subject:</strong> {{ mailing.message.subject }}
+            </li>
+        {% empty %}
+            <li class="list-group-item">No mailings available.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
