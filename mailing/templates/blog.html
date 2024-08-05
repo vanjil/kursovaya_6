@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .post {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .post:last-child {
+            border-bottom: none;
+        }
+        .post h2 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        .post p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .back-button {
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .back-button a {
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .back-button a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Наш блог</h1>
+
+        <div class="back-button">
+            <a href="{% url 'home' %}">Назад на главную</a>
+        </div>
+
+        {% if posts %}
+            <ul>
+                {% for post in posts %}
+                    <li class="post">
+                        <h2>День рождения, свадьба, и многое другое!!!</h2>
+                        <p>Тут будет оьяснение почему поздравление с праздниками очень важно</p>
+                        <p>Опубликовано: {{ post.publication_date }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Нет доступных блог-постов.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

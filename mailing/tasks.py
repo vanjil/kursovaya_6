@@ -1,7 +1,9 @@
+from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
+from smtplib import SMTPException
 from .models import Mailing, MailingAttempt
 
 @shared_task
@@ -17,13 +19,21 @@ def send_mailing_task(mailing_id):
         body = mailing.message.body
 
         for client in clients:
-            send_mail(
-                subject,
-                body,
-                settings.EMAIL_HOST_USER,
-                [client.email],
-                fail_silently=False,
-            )
+            try:
+                send_mail(
+                    subject,
+                    body,
+                    settings.EMAIL_HOST_USER,
+                    [client.email],
+                    fail_silently=False,
+                )
+            except SMTPException as e:
+                MailingAttempt.objects.create(
+                    mailing=mailing,
+                    status='Failed',
+                    response=str(e)
+                )
+                return
 
         mailing.status = 'completed'
         mailing.save()
@@ -36,7 +46,6 @@ def send_mailing_task(mailing_id):
 
 @shared_task
 def send_scheduled_mailings():
-    from .tasks import send_mailing_task  # Импорт внутри функции
     mailings = Mailing.objects.filter(status='created', start_date__lte=timezone.now())
     for mailing in mailings:
         send_mailing_task.delay(mailing.id)
@@ -45,7 +54,6 @@ def send_scheduled_mailings():
 
 @shared_task
 def start():
-    from .tasks import send_mailing_task  # Импорт внутри функции
     current_datetime = timezone.now()
     mailings = Mailing.objects.filter(start_date__lte=current_datetime, status__in=['created', 'started'])
 

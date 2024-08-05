@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Home Page</h1>
+    <p>Total mailings: {{ total_mailings }}</p>
+    <p>Active mailings: {{ active_mailings }}</p>
+    <p>Unique clients: {{ unique_clients }}</p>
+
+    <h2>Recent Blog Posts</h2>
+    <ul>
+        {% for post in random_blogs %}
+            <li>{{ post.title }} - {{ post.publication_date }}</li>
+        {% empty %}
+            <li>No blog posts available.</li>
+        {% endfor %}
+    </ul>
+
+    <div>
+        <a href="{% url 'blog' %}">View Blog</a>
+    </div>
+{% endblock %}

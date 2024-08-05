@@ -5,17 +5,23 @@
 {% block content %}
 <div class="container mt-4">
     <h1>Mailings</h1>
-    <a href="{% url 'mailing_add' %}" class="btn btn-primary mb-3">Add New Mailing</a>
-    <ul class="list-group">
+    <a href="{% url 'mailing_create' %}" class="btn btn-primary mb-3">Add New Mailing</a>
+    <div class="list-group">
         {% for mailing in mailings %}
-            <li class="list-group-item">
-                <strong>Date:</strong> {{ mailing.date }}<br>
-                <strong>Status:</strong> {{ mailing.status }}<br>
-                <strong>Subject:</strong> {{ mailing.message.subject }}
-            </li>
+            <a href="{% url 'mailing_detail' mailing.pk %}" class="list-group-item list-group-item-action">
+                <div>
+                    <strong>Date:</strong> {{ mailing.date }}<br>
+                    <strong>Status:</strong> {{ mailing.status }}<br>
+                    <strong>Subject:</strong> {{ mailing.message.subject }}
+                </div>
+                <div class="mt-2">
+                    <a href="{% url 'mailing_update' mailing.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'mailing_delete' mailing.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </a>
         {% empty %}
-            <li class="list-group-item">No mailings available.</li>
+            <div class="list-group-item">No mailings available.</div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}

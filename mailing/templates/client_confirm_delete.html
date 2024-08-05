@@ -1,15 +1,21 @@
-{% extends 'base.html' %}
-
-{% block title %}Confirm Deletion{% endblock %}
-
-{% block content %}
-<div class="container mt-4">
-    <h1>Confirm Deletion</h1>
-    <p>Are you sure you want to delete {{ object.name }} ({{ object.email }})?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a href="{% url 'clients' %}" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Confirm Delete</h1>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete "{{ object }}"?</p>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url 'mailings' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

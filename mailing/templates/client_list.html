@@ -5,16 +5,18 @@
 {% block content %}
 <div class="container mt-4">
     <h1>Список клиентов</h1>
-    <a href="{% url 'client_add' %}" class="btn btn-success mb-3">Добавить клиента</a>
+    <a href="{% url 'client_create' %}" class="btn btn-success mb-3">Добавить клиента</a>
     <ul class="list-group">
         {% for client in clients %}
-            <li class="list-group-item">
-                {{ client.name }} ({{ client.email }})
-                <a href="{% url 'client_edit' client.pk %}" class="btn btn-primary btn-sm float-right ml-2">Редактировать</a>
-                <a href="{% url 'client_delete' client.pk %}" class="btn btn-danger btn-sm float-right">Удалить</a>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ client.name }} ({{ client.email }})</span>
+                <div>
+                    <a href="{% url 'client_update' client.pk %}" class="btn btn-primary btn-sm ml-2">Редактировать</a>
+                    <a href="{% url 'client_delete' client.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
             </li>
         {% empty %}
-            <li class="list-group-item">No clients available.</li>
+            <li class="list-group-item">Клиенты не найдены.</li>
         {% endfor %}
     </ul>
 </div>
